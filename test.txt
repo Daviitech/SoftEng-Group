@@ -1,0 +1,15 @@
+Objective: Briefly state the purpose of the task. For example, "The objective of this task was to push a Docker container and an HTML file to a GitHub repository." 
+
+Process: Describe the steps you took to achieve this objective. This could include: 
+
+Creation or modification of the Docker container. 
+
+Development or adjustments made to the HTML file. 
+
+The process of pushing these files to GitHub, which could involve git add, git commit, and git push commands. 
+
+Challenges and Solutions: Mention any challenges you faced during this process and how you overcame them. For instance, dealing with merge conflicts, Docker container configuration issues, etc. 
+
+Results and Learning: Conclude by summarizing the outcome of the task and any key learnings or insights you gained. 
+
+Here's a template that you can modify based on your specific experience: 
