@@ -1,0 +1,43 @@
+
+extend layout 
+
+block content 
+     nav(class="navbar navbar-expand-lg")(style="background: grey; color: white; font-weight: bold;")
+      .container-fluid
+        a(class="navbar-brand" href="#")(style="color: white;") PMS
+        button(class="navbar-toggler" type="button" 
+            data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" 
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" 
+            aria-label="Toggle navigation")
+          span(class="navbar-toggler-icon")
+        div(class="collapse navbar-collapse" id="navbarNavAltMarkup")
+          div(class="navbar-nav")
+            a(class="nav-link active" aria-current="page" href="/")(style="color: white;") Home
+            a(class="nav-link" href="/cities")(style="color: white;") Cities |
+            a(class="nav-link" href="/dataE")(style="color: white;") Data Entry |
+            a(class="nav-link" href="/search")(style="color: white;") Search | 
+            a(class="nav-link" href="/login")(style="color: black;") Login |
+            a(class="nav-link" href="/userM")(style="color: white;") User Management | 
+     
+     .container
+        .row
+          .col-md-6.offset-md-3
+           h2.text-center User Login
+        form(action="/login", method="POST")
+          .form-group
+            label(for="username") Username:
+            input#username.form-control(type="text", name="username", placeholder="Enter your username")
+          .form-group
+            label(for="password") Password:
+            input#password.form-control(type="password", name="password", placeholder="Enter your password")
+            br
+          button.btn.btn-primary(type="submit") Login
+
+     footer.footer(style="background: grey; color: white; font-weight: bold; margin-top: 40%;")
+        .container
+            .row
+                .col-md-4
+                    
+                .col-md-4.text-center
+                    h3 &copy copywrite 2024
+                .col-md-4

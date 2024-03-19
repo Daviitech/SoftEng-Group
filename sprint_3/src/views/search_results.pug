@@ -1,0 +1,54 @@
+
+extend layout 
+
+block content 
+     nav(class="navbar navbar-expand-lg")(style="background: grey; color: white; font-weight: bold;")
+      .container-fluid
+        a(class="navbar-brand" href="#")(style="color: white;") PMS
+        button(class="navbar-toggler" type="button" 
+            data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" 
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" 
+            aria-label="Toggle navigation")
+          span(class="navbar-toggler-icon")
+        div(class="collapse navbar-collapse" id="navbarNavAltMarkup")
+          div(class="navbar-nav")
+            a(class="nav-link active" aria-current="page" href="/")(style="color: white;") Home
+            a(class="nav-link" href="/cities")(style="color: white;") Cities |
+            a(class="nav-link" href="/dataE")(style="color: white;") Data Entry |
+            a(class="nav-link" href="/search")(style="color: black;") Search | 
+            a(class="nav-link" href="/login")(style="color: white;") Login |
+            a(class="nav-link" href="/userM")(style="color: white;") User Management
+
+     .container
+        .row
+          .col-md-12
+            h1= title
+            h2 Search Results for "#{cityName}"
+            if cities.length > 0
+              table.table.table-striped.table-bordered.table-hover
+                thead
+                  tr
+                    th City ID
+                    th City Name
+                    th Country Code
+                    th District
+                    th Population
+                tbody
+                  each city in cities
+                    tr
+                      td= city.ID
+                      td= city.Name
+                      td= city.CountryCode
+                      td= city.District
+                      td= city.Population
+            else
+              p No cities found matching "#{cityName}"
+
+     footer.footer(style="background: grey; color: white; font-weight: bold; margin-top: 40%;")
+        .container
+            .row
+                .col-md-4
+                    
+                .col-md-4.text-center
+                    h3 &copy copywrite 2024
+                .col-md-4
