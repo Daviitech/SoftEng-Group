@@ -1,4 +1,3 @@
-
 extend layout 
 
 block content 
@@ -17,33 +16,33 @@ block content
             a(class="nav-link" href="/dataE")(style="color: white;") Data Entry |
             a(class="nav-link" href="/search")(style="color: white;") Search | 
             a(class="nav-link" href="/login")(style="color: white;") Login |
-            a(class="nav-link" href="/userM")(style="color: white;") User Management
+            a(class="nav-link" href="/userM")(style="color: white;") User Management 
 
      .container
         .row
             .col-md-12
-                h3.text-center Below Are All The Cities And their Population Report
-                table.table.table-striped.table-bordered.table-hover
-                    thead
-                        tr
-                        th City ID
-                        th City Name
-                        th Country Code
-                        th District
-                        th Population
-                        th Action
-                    tbody
-                    each row, i in rows
-                        tr
-                            td=row.ID
-                            td= row.Name
-                            td= row.CountryCode
-                            td= row.District
-                            td= new Intl.NumberFormat().format(row.Population)
-                            td
-                                a.btn.btn-sm.btn-primary(href=`/cities/${row.ID}`) View &nbsp;&nbsp;
-                                a.btn.btn-sm.btn-info(href=`/update/${row.ID}`) Update &nbsp;&nbsp;    
-                                a.btn.btn-sm.btn-danger(href=`/delete/${row.ID}`) Delete
+            h1.text-center Delete City
+            table.table.table-striped.table-bordered.table-hover
+                tbody
+                    tr 
+                      th City Name
+                      td #{city.name}
+                    tr 
+                      th Country
+                      td #{city.country.name}
+                    tr 
+                      th Region
+                      td #{city.country.region}
+                    tr 
+                      th Population
+                      td= new Intl.NumberFormat().format(city.population)
+                    tr
+                        th Delete Population
+                        td
+                          form(action=`/delete/${city.id}/delete`, method="POST")
+                            button.btn.btn-danger(type="submit") Delete
+                            a.btn.btn-secondary(href="/cities") Cancel
+
 
      footer.footer(style="background: grey; color: white; font-weight: bold; margin-top: 40%;")
         .container

@@ -2,10 +2,11 @@
   "name": "myproject",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.mjs",
+  "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon -e js,css --exec node index.js",
+    "start": "node index.mjs",
+    "dev": "nodemon -e js,css --exec node index.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

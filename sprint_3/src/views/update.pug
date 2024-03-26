@@ -18,7 +18,29 @@ block content
             a(class="nav-link" href="/login")(style="color: white;") Login |
             a(class="nav-link" href="/userM")(style="color: white;") User Management 
 
-            
+     .container
+        .row
+            .col-md-12
+            h1.text-center Update City
+            table.table.table-striped.table-bordered.table-hover
+                tbody
+                    tr 
+                      th City Name
+                      td #{city.name}
+                    tr 
+                      th Country
+                      td #{city.country.name}
+                    tr 
+                      th Region
+                      td #{city.country.region}
+                    tr
+                        th Update Population
+                        td 
+                          form(action=`/update/${city.id}/updatePopulation`, method="POST")
+                            input.form-control(type="number", name="newPopulation", placeholder=city.population)
+                            input.btn.btn-info(type="submit", value="Update Population")
+            a.btn.btn-success(href="/cities") Back to City Page
+
 
      footer.footer(style="background: grey; color: white; font-weight: bold; margin-top: 40%;")
         .container

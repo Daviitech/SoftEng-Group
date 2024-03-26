@@ -26,19 +26,19 @@ block content
                 tbody
                     tr
                         th City ID
-                        td= city.ID
+                        td= city.id
                     tr
                         th City Name
-                        td= city.Name
+                        td= city.name
                     tr
                         th Country Code
-                        td= city.CountryCode
+                        td= city.countryCode
                     tr
                         th District
-                        td= city.District
+                        td= city.district
                     tr
                         th Population
-                        td= city.Population
+                        td= new Intl.NumberFormat().format(city.population)
             a.btn.btn-success(href="/cities") Back to City Page
 
 
