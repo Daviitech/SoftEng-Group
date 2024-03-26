@@ -9,4 +9,4 @@ jobs:
     steps:
       - checkout:
           path: ~/SoftEng-Group/sprint_3/src
-      - run: npm
+      - run: npm install
