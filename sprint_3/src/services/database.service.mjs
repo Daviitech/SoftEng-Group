@@ -2,7 +2,7 @@ import mysql from "mysql2/promise";
 import City from "../model/cityModel.mjs";
 import Country from "../model/country.mjs";
 
-export default class DatabaseService {
+export default class DatabaseService { 
     conn;
 
     constructor(conn) {
@@ -18,7 +18,7 @@ export default class DatabaseService {
             database: "world",
         });
 
-        console.log('Connected to DB!');
+        console.log('Connection to DB Successful!');
 
         return new DatabaseService(conn);
     }
@@ -77,7 +77,7 @@ export default class DatabaseService {
       }
 
    // Delete city method in database service
-    async  deleteCity(cityId) {
+    async deleteCity(cityId) {
         try {
         const sql = "DELETE FROM city WHERE ID = ?";
         const [result] = await this.conn.execute(sql, [cityId]);
@@ -87,6 +87,16 @@ export default class DatabaseService {
         throw new Error("Error deleting city from the database");
         }
     }
+
+    // Search City Method
+    async searchCities(cityName) {
+        try {
+        const [rows] = await this.conn.execute("SELECT * FROM `city` WHERE Name LIKE ?", [`%${cityName}%`]);
+        return rows;
+        } catch (error) {
+        throw new Error("Error searching for cities in the database");
+        }
+      }
 
     /* Get a list of countries */
     async getCountries() {

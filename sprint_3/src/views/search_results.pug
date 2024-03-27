@@ -22,7 +22,6 @@ block content
      .container
         .row
           .col-md-12
-            h1= title
             h2 Search Results for "#{cityName}"
             if cities.length > 0
               table.table.table-striped.table-bordered.table-hover
@@ -40,7 +39,7 @@ block content
                       td= city.Name
                       td= city.CountryCode
                       td= city.District
-                      td= city.Population
+                      td= new Intl.NumberFormat().format(city.Population)
             else
               p No cities found matching "#{cityName}"
 

@@ -6,7 +6,7 @@ import DatabaseService from "./services/database.service.mjs";
 
 /* Create express instance */
 const app = express();
-const port = 3000;
+const port = 3000; 
 
 /* Add form data middleware */
 app.use(express.urlencoded({ extended: true }));
@@ -182,6 +182,18 @@ app.post("/delete/:id/delete", async (req, res) => {
     console.error("Error deleting city:", error);
     req.flash("error", "Error deleting city");
     res.redirect(`/cities/${cityId}`);
+  }
+});
+
+//search cities
+app.get("/search_q", async (req, res) => {
+  const cityName = req.query.cityName;
+  try {
+    const cities = await db.searchCities(cityName);
+    res.render("search_results", { title: "Search Results", cityName, cities });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error searching for cities");
   }
 });
 

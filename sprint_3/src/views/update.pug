@@ -37,7 +37,7 @@ block content
                         th Update Population
                         td 
                           form(action=`/update/${city.id}/updatePopulation`, method="POST")
-                            input.form-control(type="number", name="newPopulation", placeholder=city.population)
+                            input.form-control(type="number", name="newPopulation", placeholder=city.population, required)
                             input.btn.btn-info(type="submit", value="Update Population")
             a.btn.btn-success(href="/cities") Back to City Page
 
