@@ -9,4 +9,8 @@ jobs:
     steps:
       - checkout:
           path: ~/SoftEng-Group
+<<<<<<< HEAD
       - run: npm install
+=======
+      - run: npm install
+>>>>>>> d91ba3c584e7622d7c76f32d1874082a39442af2
