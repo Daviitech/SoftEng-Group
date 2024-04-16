@@ -1,5 +1,6 @@
 /* Import dependencies */
 import express from "express";
+//const session = require('express-session');
 import mysql from "mysql2/promise";
 import DatabaseService from "./services/database.service.mjs";
 
@@ -10,6 +11,13 @@ const port = 3000;
 
 /* Add form data middleware */
 app.use(express.urlencoded({ extended: true }));
+
+// Set up session middleware
+// app.use(session({
+//   secret: 'dontfuckwithme1996@2024',
+//   resave: false,
+//   saveUninitialized: false
+// }));
 
 //use teh pug template engine
 app.set("view engine", "pug");

@@ -5427,6 +5427,9 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+INSERT INTO `admin` VALUES (1,'admin','admin');
+commit;
+
 DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -5438,6 +5441,9 @@ CREATE TABLE `user` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+INSERT INTO `user` VALUES (1,'daviitech','123456');
+commit;
 
 --
 -- Dumping events for database 'world'
