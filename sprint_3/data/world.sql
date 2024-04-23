@@ -5421,13 +5421,13 @@ DROP TABLE IF EXISTS `admin`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `admin` (
   `ID` int NOT NULL AUTO_INCREMENT,
-  `userName` char(35) NOT NULL DEFAULT '',
+  `username` char(35) NOT NULL DEFAULT '',
   `password` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-INSERT INTO `admin` VALUES (1,'admin','admin');
+INSERT INTO `admin` VALUES (1,'admin', 12345);
 commit;
 
 DROP TABLE IF EXISTS `user`;
@@ -5435,14 +5435,14 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `ID` int NOT NULL AUTO_INCREMENT,
-  `userName` char(35) NOT NULL DEFAULT '',
-  `password` int NOT NULL DEFAULT '0',
+  `email` char(35) NOT NULL DEFAULT '',
+  `password` char(225) NOT NULL DEFAULT '',
   `status` char(35) NOT NULL DEFAULT '',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-INSERT INTO `user` VALUES (1,'daviitech','123456');
+INSERT INTO `user` VALUES (1,'daviitech@gmail.com', "123456", "active");
 commit;
 
 --

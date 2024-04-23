@@ -4,7 +4,7 @@ extend layout
 block content 
      nav(class="navbar navbar-expand-lg")(style="background: grey; color: white; font-weight: bold;")
       .container-fluid
-        a(class="navbar-brand" href="#")(style="color: white;") PMS
+        a(class="navbar-brand" href="/admin_dashboard")(style="color: white;") PMS
         button(class="navbar-toggler" type="button" 
             data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" 
             aria-controls="navbarNavAltMarkup" aria-expanded="false" 
@@ -12,12 +12,11 @@ block content
           span(class="navbar-toggler-icon")
         div(class="collapse navbar-collapse" id="navbarNavAltMarkup")
           div(class="navbar-nav")
-            a(class="nav-link active" aria-current="page" href="/")(style="color: white;") Home
-            a(class="nav-link" href="/cities")(style="color: black;") Cities |
-            a(class="nav-link" href="/dataE")(style="color: white;") Data Entry |
-            a(class="nav-link" href="/search")(style="color: white;") Search | 
-            a(class="nav-link" href="/ulogin")(style="color: white;") User Login |
-            a(class="nav-link" href="/userM")(style="color: white;") User Management
+            a(class="nav-link active" aria-current="page" href="/admin_dashboard")(style="color: white;") Home
+            a(class="nav-link" href="/cities_a")(style="color: black;") Cities |
+            a(class="nav-link" href="/reg_user")(style="color: white;") Register User | 
+            a(class="nav-link" href="/v_user")(style="color: white;") View Users |
+            a(class="nav-link" href="/alogout")(style="color: white;") Logout  
 
      .container
         .row
@@ -42,8 +41,8 @@ block content
                             td= new Intl.NumberFormat().format(row.Population)
                             td
                                 a.btn.btn-sm.btn-primary(href=`/cities/${row.ID}`) View &nbsp;&nbsp;
-                                a.btn.btn-sm.btn-info.disabled(href=`/update/${row.ID}`) Update &nbsp;&nbsp;    
-                                a.btn.btn-sm.btn-danger.disabled(href=`/delete/${row.ID}`) Delete
+                                a.btn.btn-sm.btn-info(href=`/update/${row.ID}`) Update &nbsp;&nbsp;    
+                                a.btn.btn-sm.btn-danger(href=`/delete/${row.ID}`) Delete
 
      footer.footer(style="background: grey; color: white; font-weight: bold; margin-top: 40%;")
         .container

@@ -1,8 +1,8 @@
 /* Import dependencies */
 import express from "express";
-//const session = require('express-session');
-import mysql from "mysql2/promise";
+import session from "express-session";
 import DatabaseService from "./services/database.service.mjs";
+//const { passwordMatch } = require('./passwordUtils');
 
 
 /* Create express instance */
@@ -12,21 +12,22 @@ const port = 3000;
 /* Add form data middleware */
 app.use(express.urlencoded({ extended: true }));
 
-// Set up session middleware
-// app.use(session({
-//   secret: 'dontfuckwithme1996@2024',
-//   resave: false,
-//   saveUninitialized: false
-// }));
+//Set up session middleware
+app.use(session({
+  secret: 'wait4andseegroup8',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
 
-//use teh pug template engine
+//use the pug template engine
 app.set("view engine", "pug");
 app.set("views","./views");
 
 //add a static files loction
 app.use(express.static("static"));
 
-console.log(process.env.MODE_ENV);
+//console.log(process.env.MODE_ENV);
 
 /* Setup database connection */
 // const db = mysql.createConnection({
@@ -62,8 +63,8 @@ app.get("/dataE",(req, res) =>{
   // res.sendFile(path.join(__dirname, 'index.pug'));
 });
 
-app.get("/login",(req, res) =>{
-  res.render("login",
+app.get("/ulogin",(req, res) =>{
+  res.render("ulogin",
   { 'title': 'Login Page'});
   // res.sendFile(path.join(__dirname, 'index.pug'));
 });
@@ -95,9 +96,21 @@ app.get("/search",(req, res) =>{
 // });
 
 app.get("/userM",(req, res) =>{
+  if (req.session.admin) {
+    return res.redirect("/admin_dashboard");
+  }
   res.render("userM",
   { 'title': 'User Management Page'});
   // res.sendFile(path.join(__dirname, 'index.pug'));
+});
+
+app.get("/cities_a", async (req, res) => {
+  if (!req.session.admin) {
+    return res.redirect("/userM");
+  }
+  const [rows, fields] = await db.getCities();
+  /* Render cities.pug with data passed as plain object */
+  return res.render("cities_a", { rows, fields });
 });
 
 
@@ -240,6 +253,155 @@ app.get("/city:id", function(req, res){
   console.log(req.params);
   res.send("Id is " + RegExp.params.id);
 });
+
+app.post("/alogin", async (req, res) => {
+  const { username, password } = req.body;
+  console.log(username,password);
+  try {
+    const admin = await db.authenticateadmin(username, password);
+    if (admin === null) {
+      return res.render("userM", { title: 'Admin Login Page', error: 'User not found!!' });
+    }else if (admin === false) {
+      return res.render("userM", { title: 'Admin Login Page', error: 'Invalid password!!' });
+    }else if (admin === true){
+      // Set admin session data upon successful authentication
+      req.session.admin = { admin_user: admin.username };
+      res.redirect("/admin_dashboard");
+    }
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).render("userM", { title: 'Login Page', error: 'Internal Server Error. Please try again later.' });
+  }
+});
+
+app.get("/admin_dashboard", (req, res) => {
+  if (!req.session.admin) {
+    return res.redirect("/userM");
+  }
+  const admin = req.session.admin.admin_user;
+  res.render("admin_dashboard", { title: 'Admin Dashboard', admin });
+});
+
+app.get("/alogout", (req, res) => {
+  // Destroy the session data (logout)
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error destroying session:", err);
+      return res.status(500).send("Internal Server Error");
+    }
+    // Redirect to the login page after logout
+    res.redirect("/userM");
+  });
+});
+
+app.get("/reg_user",(req, res) =>{
+  if (!req.session.admin) {
+    return res.redirect("/admin_dashboard");
+  }
+  res.render("reg_user",
+  { 'title': 'Register User'});
+});
+
+app.get("/v_user", async (req, res) =>{
+  if (!req.session.admin) {
+    return res.redirect("/admin_dashboard");
+  }
+  const [rows] = await db.getUsers();
+  res.render("v_user", { title: 'View User(s)', rows });
+});
+
+app.post("/register_user", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Check if the user already exists
+    const userExists = await db.verify_email(email);
+
+    if (userExists) {
+      return res.render('reg_user', { error: 'Email address is already registered. Please use a different email.' });
+    }
+
+    // Register the user if the email is not already registered
+    const userRegistered = await db.registerUser(email, password);
+
+    if (userRegistered) {
+      return res.render('reg_user', { message: 'User registered successfully!!!' });
+    } else {
+      return res.render('reg_user', { error: 'User registration failed. Please try again.' });
+    }
+
+  } catch (error) {
+    console.error('Error registering user:', error);
+    return res.render('reg_user', { error: 'Registration failed. Please try again.' });
+  }
+});
+
+
+app.get("/v_user/:ID/:status", async (req, res) => {
+  const user_id = req.params.ID;
+  const user_status = req.params.status;
+
+  if(user_status == 'active'){
+    const update_inactive = await db.update_user_inactive(user_id);
+    res.redirect("/v_user");
+  }else if(user_status == 'inactive'){
+    const update_active = await db.update_user_active(user_id);
+    res.redirect("/v_user");
+  }
+  
+});
+
+app.get("/v_user/:ID", async (req, res) => {
+  const user_id = req.params.ID;
+  const delete_user = await db.delete_user_u(user_id);
+  res.redirect("/v_user");
+  
+});
+
+app.post("/ulogin", async (req, res) => {
+  const { email, password } = req.body;
+  console.log(email,password);
+  try {
+    const user = await db.getUserByEmail(email);
+
+    if (!user) {
+      return res.render("index", { title: "Login", error: "Invalid credentials" });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.render("index", { title: "Login", error: "Invalid credentials" });
+    }
+
+    req.session.user = { user_user: user.email };
+    res.redirect("/user_dashboard");
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/user_dashboard", (req, res) => {
+  if (!req.session.user) {
+    return res.redirect("/ulogin");
+  }
+  const user = req.session.user.user_user;
+  res.render("user_dashboard", { title: 'User Dashboard', user });
+});
+
+app.get("/ulogout", (req, res) => {
+  // Destroy the session data (logout)
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error destroying session:", err);
+      return res.status(500).send("Internal Server Error");
+    }
+    // Redirect to the login page after logout
+    res.redirect("/ulogin");
+  });
+});
+
 
 // Run server!
 app.listen(port, () => {

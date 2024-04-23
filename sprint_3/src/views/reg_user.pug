@@ -12,30 +12,32 @@ block content
           span(class="navbar-toggler-icon")
         div(class="collapse navbar-collapse" id="navbarNavAltMarkup")
           div(class="navbar-nav")
-            a(class="nav-link active" aria-current="page" href="/")(style="color: white;") Home
-            a(class="nav-link" href="/cities")(style="color: white;") Cities |
-            a(class="nav-link" href="/dataE")(style="color: white;") Data Entry |
-            a(class="nav-link" href="/search")(style="color: white;") Search | 
-            a(class="nav-link" href="/ulogin")(style="color: white;") User Login |
-            a(class="nav-link" href="/userM")(style="color: black;") User Management | 
+            a(class="nav-link active" aria-current="page" href="#")(style="color: white;") Home
+            a(class="nav-link" href="/cities_a")(style="color: white;") Cities |
+            a(class="nav-link" href="/reg_user")(style="color: black;") Register User | 
+            a(class="nav-link" href="/v_user")(style="color: white;") View Users |
+            a(class="nav-link" href="/alogout")(style="color: white;") Logout 
 
      .container
         .row
           .col-md-6.offset-md-3
-           h2.text-center Admin Login
+           h2.text-center Register User
+           span.text-success
+            if message
+              p.success= message
            span.text-danger
             if error
               p.error= error
 
-        form(action="/alogin", method="POST")
+        form(action="/register_user", method="POST")
           .form-group
-            label(for="username") Username:
-            input#username.form-control(type="text", name="username", required, placeholder="Enter your username")
+            label(for="User Email") User Email:
+            input#userEmail.form-control(type="email", name="email", required, placeholder="Enter User Email")
           .form-group
-            label(for="password") Password:
-            input#password.form-control(type="password", name="password",required,  placeholder="Enter your password")
+            label(for="User Password") User Password:
+            input#UserPassword.form-control(type="password", name="password",required,  placeholder="Enter User password")
             br
-          button.btn.btn-primary(type="submit") Login
+          button.btn.btn-primary(type="submit") Register User
 
      footer.footer(style="background: grey; color: white; font-weight: bold; margin-top: 40%;")
         .container

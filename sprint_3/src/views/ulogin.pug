@@ -16,17 +16,17 @@ block content
             a(class="nav-link" href="/cities")(style="color: white;") Cities |
             a(class="nav-link" href="/dataE")(style="color: white;") Data Entry |
             a(class="nav-link" href="/search")(style="color: white;") Search | 
-            a(class="nav-link" href="/login")(style="color: black;") Login |
+            a(class="nav-link" href="/ulogin")(style="color: black;") User Login |
             a(class="nav-link" href="/userM")(style="color: white;") User Management | 
      
      .container
         .row
           .col-md-6.offset-md-3
            h2.text-center User Login
-        form(action="/login", method="POST")
+        form(action="/login_user", method="POST")
           .form-group
-            label(for="username") Username:
-            input#username.form-control(type="text", name="username", placeholder="Enter your username")
+            label(for="email") Email:
+            input#username.form-control(type="text", name="email", placeholder="Enter your username")
           .form-group
             label(for="password") Password:
             input#password.form-control(type="password", name="password", placeholder="Enter your password")
